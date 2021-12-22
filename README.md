@@ -23,6 +23,8 @@ SVG (벡터기반) Drawing WebSite를 Vue.js 2를 활용하여 만들어볼 예�
 
 [Figma 보러가기](https://www.figma.com/file/U6ELp3FmU5ELEVax63yBCs/Untitled?node-id=0%3A1)
 
+![스크린샷 2021-12-23 오전 12.13.45](./img/스크린샷 2021-12-23 오전 12.13.45.png)
+
 ---
 
 ## 📝 자료 탐색
