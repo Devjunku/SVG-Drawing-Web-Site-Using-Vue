@@ -61,5 +61,9 @@ svg 태그 안에는 벡터 기반 그래픽을 나타낼 수 있는 지정된 �
 
 
 
+## 🎨 Figma
+
+[Figma 보러가기](https://www.figma.com/file/U6ELp3FmU5ELEVax63yBCs/Untitled?node-id=0%3A1)
+
 
 
