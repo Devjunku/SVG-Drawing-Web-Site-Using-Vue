@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SVG를 기반으로 한 드로일툴입니다. Vue.js를 통해 만들었습니다.">
 
   <!-- css 스타일링 파일 로드 -->
   <link rel="stylesheet" href="./style.css">
@@ -19,7 +19,7 @@
 <body>
   <!-- 전체 DOM -->
   <div>
-    <!-- Menu Bar -->
+    <!-- 도움말 Bar -->
     <div>
       <!-- 도움말 버튼-->
       <i></i>
@@ -35,9 +35,46 @@
 
     <!-- svg 그리기 -->
     <svg>
-      
+      <!-- vue.js의 template -->
+      <template>
+        <rect/>
+        <line/>
+        <circle/>
+        <polyline/>
+        <polyline/>
+      </template>
     </svg>
-
+    <!-- 메뉴바 -->
+    <div>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li>
+          <i></i>
+          <input type="file">
+        </li>
+      </ul>
+      <!-- 햄버거 바 -->
+      <ul>
+        <li>save</li>
+        <li>File Open</li>
+        <li>
+          <select name="" id="">
+            <option value=""></option>
+            <option value=""></option>
+          </select>
+        </li>
+        <li>Import</li>
+        <li>Export</li>
+        <li>Theme</li>
+        <li>Print</li>
+        <li>Close</li>
+      </ul>
+    </div>
   </div>
 </body>
 <script src="./script.js"></script>

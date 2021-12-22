@@ -9,3 +9,15 @@
 body{
   overflow: hidden;
 }
+
+/* 스크롤바 삭제 */
+::-webkit-scrollbar { display: none; }
+
+svg text{
+  user-select: none;
+
+}
+svg *{
+  transform-box: fill-box;
+  transform-origin: center;
+}
