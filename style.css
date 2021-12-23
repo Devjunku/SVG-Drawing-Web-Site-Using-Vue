@@ -1,23 +1,174 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+/* 폰트 적용 */
 *{
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/* body 태그에 전부 적용 */
 body{
   overflow: hidden;
+}
+
+/* svg 태그에 적용 */
+svg *{
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 /* 스크롤바 삭제 */
 ::-webkit-scrollbar { display: none; }
 
-svg text{
-  user-select: none;
-
+/* 도움말 */
+.helpMenu {
+  top: 20px;
+  right: 20px;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  overflow: hidden;
+  z-index: 2;
+  padding: 10px;
+  transition: all 1s ease;
+  border-radius: 20px;
 }
-svg *{
-  transform-box: fill-box;
-  transform-origin: center;
+
+/* helpMenu에 hover 추가 
+   커서 감지 후 pointer로 변환
+*/
+.helpMenu i:hover {
+  cursor: pointer;  
+  background-color: rgba(179, 179, 179, 0.767);
+}
+
+/* helpmenu가 열렸을 때 helpOpen */
+.helpOpen {
+  height: 400px;
+  width: 700px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* helpOpen이 열렸을 때의 i태그 */
+.helpOpen i {
+  float: right;
+}
+
+/* helpOpen이 열렸을 때의 ul li태그 */
+.helpOpen ul li {
+  margin: 20px;
+  font-size: 1.3rem;
+  list-style: none;
+}
+
+/* 메뉴 */
+.menu {
+  top: 20px;
+  left: 20px;
+  position: absolute;
+  transition: background-color, color .5s ease;
+  border-radius: 20px;
+}
+
+/* 메뉴의 item */
+.navItems {
+  display: flex;
+  padding: 10px;
+  list-style: none;
+  transition: background-color .5s ease;
+}
+
+/* navItems의 li 태그, helpMenu의 i태그 */
+.navItems li, .helpMenu i{
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  padding: 5px;
+}
+
+/* 네브바 호버 */
+.navItems li:hover{
+  background-color: rgba(179, 179, 179, 0.767);
+  cursor: pointer;
+}
+
+/* 햄버거 */
+#hamburger{
+  border-radius: 10px;
+}
+
+
+/* 아이템 세부 옵션 */
+.itemOptions{
+  background-color: rgba(102, 100, 100, 0.295);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  animation-name: opacity;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  overflow: hidden;
+}
+
+@keyframes opacity{ to{ opacity: 1; }}
+.itemOptions li{
+  list-style: none;
+  padding: 10px 20px;
+}
+.itemOptions li i{
+  margin-right: 10px;
+  pointer-events: none;
+}
+.itemOptions li:hover{
+  background-color:#949494;
+  cursor: pointer;
+}
+
+.activeTool{
+  background-color: rgba(179, 179, 179, 0.767);
+}
+.colorPicker{
+  border: none;
+}
+/* 옵션은 id로 접근 */
+#openOptions{
+  padding: 0;
+}
+#openOptions select{
+  height: 100%;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: rgb(102, 100, 100);
+  font-size: 1rem;
+  color: white;
+  outline: none;
+}
+#stroke-width{
+  width: auto;
+}
+#stroke-width:hover{
+  background-color: initial;
+}
+
+/* 텍스트 입력은 일단 보류 */
+/* #textInput{
+  border-radius: 40px;
+  border: none;
+  padding: 5px 10px;
+  outline: none;
+} */
+
+
+@media print {
+  .menu{
+      display: none;
+  }
 }
