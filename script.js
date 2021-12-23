@@ -41,6 +41,7 @@ const app = new Vue({
               case 'text': this.drawText(event); break;
               case 'img': this.drawImg(event); break;
           }
+<<<<<<< HEAD
         },
         
         start(event){
@@ -55,6 +56,9 @@ const app = new Vue({
                 case 'img': this.startImg(event); break;
             }
         },
+=======
+      },
+>>>>>>> 4119431d753d48b8d970eb8f6ca3b18f1e6bf3f9
 
         // 아이템 오픈
         showOpen(){
