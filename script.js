@@ -189,25 +189,25 @@ const app = new Vue({
         // 이벤트에 따른 그림 그리기 시작
         start(event) {
             switch(this.tool) {
-            case 'line': this.startLine(event); break;
-            case 'circle': this.startCircle(event); break;
-            case 'rect': this.startRect(event); break;
-            case 'pencil': this.startPencil(event); break;
-            case 'eraser': this.startEraser(event); break;
-            case 'text': this.startText(event); break;
-            case 'img': this.startImg(event); break;
+            case 'line': this.startLine(event); break
+            case 'circle': this.startCircle(event); break
+            case 'rect': this.startRect(event); break
+            case 'pencil': this.startPencil(event); break
+            case 'eraser': this.startEraser(event); break
+            case 'text': this.startText(event); break
+            case 'img': this.startImg(event); break
             }
         },
     
         move(event) {
             switch(this.tool) {
-            case 'line': this.drawLine(event); break;
-            case 'circle': this.drawCircle(event); break;
-            case 'rect': this.drawRect(event); break;
-            case 'pencil': this.drawPencil(event); break;
-            case 'eraser': this.drawEraser(event); break;
-            case 'text': this.drawText(event); break;
-            case 'img': this.drawImg(event); break;
+            case 'line': this.drawLine(event); break
+            case 'circle': this.drawCircle(event); break
+            case 'rect': this.drawRect(event); break
+            case 'pencil': this.drawPencil(event); break
+            case 'eraser': this.drawEraser(event); break
+            case 'text': this.drawText(event); break
+            case 'img': this.drawImg(event); break
             }
         },
     
@@ -282,27 +282,30 @@ const app = new Vue({
                 event.key == 'w' ? last.y -= 2 : '' 
                 event.key == 's' ? last.y += 2 : ''
                 break
+
                 case 'img':
-                event.key == 'ArrowLeft' ? last.rotate += 2 : '';
-                event.key == 'ArrowRight' ? last.rotate -= 2 : '';
-                event.key == 'a' ? last.x-= 2 : '';
-                event.key == 'd' ? last.x+= 2 : '';
-                event.key == 'w' ? last.y-= 2 : '';
-                event.key == 's' ? last.y+= 2 : '';
+                event.key == 'ArrowLeft' ? last.rotate += 2 : ''
+                event.key == 'ArrowRight' ? last.rotate -= 2 : ''
+                event.key == 'a' ? last.x-= 2 : ''
+                event.key == 'd' ? last.x+= 2 : ''
+                event.key == 'w' ? last.y-= 2 : ''
+                event.key == 's' ? last.y+= 2 : ''
                 break
+
                 case 'text':
-                event.key == 'ArrowLeft' ? last.rotate += 2 : '';
-                event.key == 'ArrowRight' ? last.rotate -= 2 : '';
-                event.key == 'a' ? last.x-= 2 : '';
-                event.key == 'd' ? last.x+= 2 : '';
-                event.key == 'w' ? last.y-= 2 : '';
-                event.key == 's' ? last.y+= 2 : '';
+                event.key == 'ArrowLeft' ? last.rotate += 2 : ''
+                event.key == 'ArrowRight' ? last.rotate -= 2 : ''
+                event.key == 'a' ? last.x-= 2 : ''
+                event.key == 'd' ? last.x+= 2 : ''
+                event.key == 'w' ? last.y-= 2 : ''
+                event.key == 's' ? last.y+= 2 : ''
                 break;
+
                 case 'circle':
-                event.key == 'a' ? last.x-= 2 : '';
-                event.key == 'd' ? last.x+= 2 : '';
-                event.key == 'w' ? last.y-= 2 : '';
-                event.key == 's' ? last.y+= 2 : '';
+                event.key == 'a' ? last.x-= 2 : ''
+                event.key == 'd' ? last.x+= 2 : ''
+                event.key == 'w' ? last.y-= 2 : ''
+                event.key == 's' ? last.y+= 2 : ''
                 break;
                 }
             }
