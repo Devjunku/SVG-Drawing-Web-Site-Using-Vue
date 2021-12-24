@@ -5,130 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="SVG를 기반으로 한 드로일툴입니다. Vue.js를 통해 만들었습니다.">
 
-  <!-- css 스타일링 파일 로드 -->
   <link rel="stylesheet" href="./style.css">
-  
-  <!-- 사전에 vue cdn을 갖고와야 script code가 먹기 때문에 작성해야함. -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  
-  <!-- fontawesome안의 font를 사용할 예정이기 때문에 body전에 갖고와야 함. -->
   <script src="https://kit.fontawesome.com/029682b453.js" crossorigin="anonymous"></script>
-  
   <title>SVG Drawing Web Using Vue.js</title>
 </head>
 <body>
-  <!-- 전체 DOM -->
-  <div id="app" :style="{'background': dark ? 'black' : 'white'}">
-    <!-- 도움말 Bar -->
-    <div class="helpMenu" :class="{helpOpen: help}" :style="{'color': dark ? 'white' : 'black', 'background-color' : dark ? 'rgb(102, 100, 100)' : 'rgb(223 223 223)'}">
-      <!-- 도움말 버튼-->
-      <i @click="help != help" class="fas" :class="{'fa-question': !help, 'fa-times-circle': help}"></i>
-      <!-- 도움말 창 -->
-      <ul v-if="help">
-        <!-- 각 기능 설명 -->
-        <li style="margin-top: 50px;"> ← → 키로 최근 요소 회전 가능</li>
-        <li>a, s, d, w로 최근 요소 이동 가능</li>
-        <li>최근 직사각형의 경우 모서리 ↑, ↓로 조정 가능 </li>
-        <li>저장은 ctrl + v, undo ctrl + z, redo ctrl + shift + z</li>
-      </ul>
-    </div>
+  <div id="app" :style="{'background-color' : dark ? 'black' : 'white'}" >
+      <div class="helpMenu" :class="{helpOpen: help}" :style="{'color' : dark ? 'white' : 'black', 'background-color' : dark ? 'rgb(102, 100, 100)' : 'rgb(223 223 223)'}">
+          <i @click="help = !help" class="fas" :class="{'fa-question': !help, 'fa-times-circle': help}"></i>
+          <ul v-if="help">
+              <li>도움말</li>
+              <li style="margin-top: 50px;">← → 키로 최근 요소 회전 가능</li>
+              <li>a, s, d, w로 최근 요소 이동 가능</li>
+              <li>최근 직사각형의 경우 모서리 radius를 ↑, ↓로 조정 가능 </li>
+              <li>벡터 기반 이미지를 내보거나 불러올 수 있습니다.</li>
+              <li>당신의 작품을 저장하거나 불러올 수 있습니다.</li>
+              <li>save:&nbsp;&nbsp;&nbsp; ctrl + v &nbsp;&nbsp;&nbsp; undo: ctrl + z &nbsp;&nbsp;&nbsp; redo ctrl + shift + z</li>
+          </ul>
+      </div>
 
-    <!-- svg 그리기 -->
-    <svg class="artboard pencil" 
-    @mousemove="move" @mousedown="start">
-      <!-- vue.js의 template -->
-      <template v-for="tool in art">
-        <!-- 사각형 -->
-        <rect v-if="tool.tool == 'rect'"
-          :x="tool.x"
-          :y="tool.y"
-          :width="tool.width"
-          :height="tool.height"
-          :rx="tool.radius"
-          :ry="tool.radius"
-          :style="{fill: tool.fill, stroke: tool.stroke, 'stroke-width': tool.strokeWidth, 
+      <svg class="artboard pencil" 
+            :style="{'background-color' : dark ? 'black' : 'white'}" 
+            @mousemove="move" @mousedown="start">
+
+            <template v-for="tool in art">
+                <rect v-if="tool.tool == 'rect'"
+                    :x="tool.x"
+                    :y="tool.y"
+                    :width="tool.width"
+                    :height="tool.height"
+                    :rx="tool.radius"
+                    :ry="tool.radius"
+                    :style="{fill: tool.fill, stroke: tool.stroke, 'stroke-width': tool.strokeWidth, 
                     transform: `rotate(${tool.rotate}deg)`}"
-          />
+                />
 
-        <!-- 선분 -->
-        <line v-if="tool.tool == 'line'"
-          :x1="tool.x1"
-          :y1="tool.y1" 
-          :x2="tool.x2" 
-          :y2="tool.y2" 
-          :style="{stroke: tool.stroke, 'stroke-width': tool.strokeWidth, 'stroke-linecap': tool.linecap, 
-          transform: `rotate(${tool.rotate}deg)`}"
-          />
+                <line v-if="tool.tool == 'line'" 
+                    :x1="tool.x1" 
+                    :y1="tool.y1" 
+                    :x2="tool.x2" 
+                    :y2="tool.y2" 
+                    :style="{stroke: tool.stroke, 'stroke-width': tool.strokeWidth, 'stroke-linecap': tool.linecap, 
+                    transform: `rotate(${tool.rotate}deg)`}" 
+                />
 
-        <!-- 원 -->
-        <circle v-if="tool.tool == 'circle'" 
-          :cx="tool.x"
-          :cy="tool.y"
-          :r="tool.radius"
-          :stroke="tool.stroke"
-          :stroke-width="tool.strokeWidth"
-          :fill="tool.fill"
-          />
+                <circle v-if="tool.tool == 'circle'" 
+                    :cx="tool.x"
+                    :cy="tool.y"
+                    :r="tool.radius"
+                    :stroke="tool.stroke"
+                    :stroke-width="tool.strokeWidth"
+                    :fill="tool.fill"
+                />
 
-        <!-- 다각선 -->
-        <polyline v-if="tool.tool == 'polyline'" 
-          :points="tool.points"
-          :style="{ fill:'none', 
-            stroke: tool.stroke, 
-            'stroke-width': tool.width}" 
-          />
-        <polyline v-if="tool.tool == 'eraser'" 
-          :points="tool.points"
-          :style="{ fill:'none', 
-            stroke: dark ? 'black' : 'white', 
-            'stroke-width': tool.width}"
-          />
-          
-      </template>
-    </svg>
-    <!-- 메뉴바 -->
-    <div class="menu" :style="{'color' : dark ? 'white' : 'black', 'background-color' : dark ? 'rgb(102, 100, 100)' : 'rgb(223 223 223)'}">
-      <ul class="navItems">
-        <li id="hamburger" @click="hamburger = !hamburger"><i class="fas" :class="{'fa-bars': !hamburger, 'fa-times-circle': hamburger}"></i></li>
-        <li @click="selectTool('pencil', $event)" title="Pencil" :class="{activeTool: tool == 'pencil'}"><i class="fas fa-pencil-alt"></i></li>
-        <li @click="selectTool('eraser', $event)" title="Eraser" :class="{activeTool: tool == 'eraser'}"><i class="fas fa-eraser"></i></li>
-        <li @click="selectTool('line', $event)" title="Line" :class="{activeTool: tool == 'line'}"><i class="fas fa-slash"></i></li>
-        <li @click="selectTool('circle', $event)" title="Circle" :class="{activeTool: tool == 'circle'}"><i class="far fa-circle"></i></li>
-        <li @click="selectTool('rect', $event)" title="Rectangle" :class="{activeTool: tool == 'rect'}"><i class="far fa-square"></i></li>
-        <li :class="{activeTool: tool == 'img'}" title="Image" style="position: relative;">
+                <polyline v-if="tool.tool == 'polyline'" 
+                :points="tool.points"
+                :style="{ fill:'none', 
+                    stroke: tool.stroke, 
+                    'stroke-width': tool.width}" 
+                />
 
-          <i class="fa fa-image" style="position: absolute;"></i>
-          <input 
-            @click="selectTool('img', $event)" 
-            @change="onFileChange"  
-            type="file" 
-            style="position: absolute; height: 100%; width: 100%; opacity: 0;"
-          >
-        </li>
-      </ul>
-      <!-- 
+                <polyline v-if="tool.tool == 'eraser'" 
+                :points="tool.points"
+                :style="{ fill:'none', 
+                    stroke: dark ? 'black' : 'white', 
+                    'stroke-width': tool.width}" 
+                />
 
-        Text 기능을 넣을지 추후 생각하기로
+                <text v-if="tool.tool == 'text'" :x="tool.x" :y="tool.y" :fill="tool.stroke" :font-size="tool.size * 4" :style="{transform: `rotate(${tool.rotate}deg)`}">{{ tool.text }}</text>
+                
+                <image v-if="tool.tool == 'img'" :href="tool.img" :x="tool.x" :y="tool.y" :width="tool.width + 'px'"/ :style="{transform: `rotate(${tool.rotate}deg)`}">
 
-       -->
-      <!-- 햄버거 바 -->
-      <ul class="itemOptions" v-if="hamburger">
-        <li @clikc="saveArt"><i class="fas fa-save"></i>save</li>
-        <li @click="showOpen"><i class="fas fa-folder-open"></i>File Open</li>
-        <li id="openOptions" v-if="openModal">
-          <select @change="openArt" >
-            <option value="">아이템을 선택하세요</option>
-            <option :value="option" v-for="option in openOptions">{{option.substring(4, option.length)}}</option>
-          </select>
-        </li>
-        <li><i class="fas fa-upload"></i>Import<input type="file" @change="importArt"></li>
-        <li @click="exportArt"><i class="fas fa-download"></i>Export</li>
-        <li @click="dark = !dark"><i class="fas" :class="{'fa-moon': !dark, 'fa-sun': dark}"></i>{{dark ? 'Light' : 'Dark'}} Theme</li>
-        <li onclick="print();"><i class="fas fa-print"></i>Print</li>
-        <li onclick="confirm('정말 페이지를 닫으시겠습니까?') ? window.close() : ''"><i class="fas fa-sign-out-alt"></i>Close</li>
-      </ul>
+            </template>
+        </svg>
+        <div class="menu" :style="{'color' : dark ? 'white' : 'black', 'background-color' : dark ? 'rgb(102, 100, 100)' : 'rgb(223 223 223)'}">
+            <ul class="navItems">
+                <li id="hamburger" @click="hamburger = !hamburger"><i class="fas" :class="{'fa-bars': !hamburger, 'fa-times-circle': hamburger}"></i></li>
+                <li @click="selectTool('pencil', $event)" title="Pencil" :class="{activeTool: tool == 'pencil'}"><i class="fas fa-pencil-alt"></i></li>
+                <li @click="selectTool('eraser', $event)" title="Eraser" :class="{activeTool: tool == 'eraser'}"><i class="fas fa-eraser"></i></li>
+                <li @click="selectTool('line', $event)" title="Line" :class="{activeTool: tool == 'line'}"><i class="fas fa-slash"></i></li>
+                <li @click="selectTool('circle', $event)" title="Circle" :class="{activeTool: tool == 'circle'}"><i class="far fa-circle"></i></li>
+                <li @click="selectTool('rect', $event)" title="Rectangle" :class="{activeTool: tool == 'rect'}"><i class="far fa-square"></i></li>
+                <li @click="selectTool('text', $event)" title="Text" :class="{activeTool: tool == 'text'}"><i class="fa fa-font"></i></li>
+                <li title="Image" :class="{activeTool: tool == 'img'}" style="position: relative;">
+                
+                    <i class="fa fa-image" style="position: absolute;"></i>
+                    <input 
+                        @click="selectTool('img', $event)" 
+                        @change="onFileChange"  
+                        type="file" 
+                        style="position: absolute; height: 100%; width: 100%; opacity: 0;"
+                    />
+                </li>
+                <li title="Enter Text" id="stroke-width" v-if="tool == 'text'" ><input type="text" id="textInput" v-model="text"></li>
+                <li title="Stroke"><input type="color" class="colorPicker" v-model="stroke"><i>선</i></li>
+                <li title="Fill" v-if="tool == 'rect' || tool == 'circle'"><input type="color" class="colorPicker" v-model="fill"></li>
+                <li title="Stroke Linecap" v-if="tool == 'line'">
+                    <select style="height: 100%;" v-model="linecap">
+                        <option value="butt">&#11035;</option>
+                        <option value="round">&#9899;</option>
+                    </select>
+                </li>
+                <li title="Stroke Width" id="stroke-width"><input type="range" name="vol" min="5" max="50" v-model="strokeWidth"></li>
+                <li @click="trash" title="Trash"><i class="fas fa-trash-alt"></i></li>
+            </ul>
+            <ul class="itemOptions" v-if="hamburger">
+                <li @click="saveArt"><i class="fas fa-save"></i>Save</li>
+                <li @click="showOpen"><i class="fas fa-folder-open"></i>Open</li>
+                <li id="openOptions" v-if="openModal">
+                    <select @change="openArt">
+                        <option value="">Choose an Item</option>
+                        <option :value="option" v-for="option in openOptions">{{option.substring(4, option.length)}}</option>
+                    </select>
+                </li>
+                <li><i class="fas fa-upload"></i>Import <input type="file" @change="importArt"></li>
+                <li @click="exportArt"><i class="fas fa-download"></i>Export</li>
+                <li @click="dark = !dark"><i class="fas" :class="{'fa-moon': !dark, 'fa-sun': dark}"></i>{{dark ? 'Light' : 'Dark'}} Theme</li>
+                <li onclick="print();"><i class="fas fa-print"></i>Print</li>
+                <li onclick="confirm('Are you really want to close?') ? window.close() : ''"><i class="fas fa-sign-out-alt"></i></i>Close</li>
+            </ul>
+        </div>
     </div>
-  </div>
-</body>
-<script src="./script.js"></script>
-</html>
+    </body>
+  <script src="./script.js"></script>
+  </html>

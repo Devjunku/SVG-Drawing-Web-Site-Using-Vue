@@ -11,16 +11,14 @@
 body{
   overflow: hidden;
 }
-
-/* svg 태그에 적용 */
-svg *{
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-/* 스크롤바 삭제 */
 ::-webkit-scrollbar { display: none; }
-
+.menu {
+  top: 20px;
+  left: 20px;
+  position: absolute;
+  transition: background-color, color .5s ease;
+  border-radius: 20px;
+}
 /* 도움말 */
 .helpMenu {
   top: 20px;
@@ -65,13 +63,7 @@ svg *{
 }
 
 /* 메뉴 */
-.menu {
-  top: 20px;
-  left: 20px;
-  position: absolute;
-  transition: background-color, color .5s ease;
-  border-radius: 20px;
-}
+/* 스크롤바 삭제 */
 
 /* 메뉴의 item */
 .navItems {
@@ -94,17 +86,16 @@ svg *{
   padding: 5px;
 }
 
-/* 네브바 호버 */
-.navItems li:hover{
-  background-color: rgba(179, 179, 179, 0.767);
-  cursor: pointer;
-}
-
 /* 햄버거 */
 #hamburger{
   border-radius: 10px;
 }
 
+/* 네브바 호버 */
+.navItems li:hover{
+  background-color: rgba(179, 179, 179, 0.767);
+  cursor: pointer;
+}
 
 /* 아이템 세부 옵션 */
 .itemOptions{
@@ -132,6 +123,11 @@ svg *{
   cursor: pointer;
 }
 
+.artboard{
+  height: 100vh;
+  width: 100vw;
+  transition: background-color .5s ease;
+}
 .activeTool{
   background-color: rgba(179, 179, 179, 0.767);
 }
@@ -158,13 +154,19 @@ svg *{
   background-color: initial;
 }
 
-/* 텍스트 입력은 일단 보류 */
-/* #textInput{
+/* svg 태그에 적용 */
+svg *{
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+
+#textInput{
   border-radius: 40px;
   border: none;
   padding: 5px 10px;
   outline: none;
-} */
+}
 
 
 @media print {
