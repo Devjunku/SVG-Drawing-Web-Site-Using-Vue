@@ -4,6 +4,12 @@ SVG (벡터기반) Drawing WebSite를 Vue.js 2를 활용하여 만들어볼 예�
 
 구현 과정을 모두 공개할 예정이오니, 코드보다는 구현 과정에 집중해주시면 감사하겠습니다.
 
+모든 소스코드는 [NishantTheProgrammer](https://github.com/NishantTheProgrammer/WebDraw/tree/master/cursors)에서 비롯되었습니다.
+
+처음으로 그림판을 구현하는 것이라 많은 소스코드를 찾았지만, canvas(Bitmap기반)이 아닌 svg를 vue.js로 구현한 소스코드는 위 [링크](https://github.com/NishantTheProgrammer/WebDraw/tree/master/cursors)에서 만큼 자세히 구현한 repo는 없었습니다.
+
+따라서 위 소스코드에서 그림판을 만들기 위해 어떠한 것을 사용했는지 학습하는 것을 제 2의 목표로 하겠습니다.
+
 ---
 
 ### 🛣 프로젝트 실행
@@ -71,7 +77,7 @@ svg 태그 안에는 벡터 기반 그래픽을 나타낼 수 있는 `지정된 
 7. 패스: `<path>`
 8. 다각라인: `<polyline>`
 
-위와 같이 대표적인 8개의 태그 중 `<rect>`, `<circle>`, `<line>`, `<polygon>`를 사용하여 기본적인 도형과 선을 생성할 수 있도록 하겠습니다.
+위와 같이 대표적인 8개의 태그 중 `<rect>`, `<circle>`, `<line>`, `<polyline>`를 사용하여 기본적인 도형과 선을 생성할 수 있도록 하겠습니다.
 
 width와 height을 설정하여 영역을 지정할 수 있습니다. 물론 css를 활용하여 각 태그를 꾸미는 것도 가능합니다. 이때 사용되는 css 속성은 다음과 같습니다. 
 
@@ -96,9 +102,9 @@ width와 height을 설정하여 영역을 지정할 수 있습니다. 물론 css
 - x2, y2: 선의 끝 좌표를 의미합니다.
 - 중요한 것은 line은 선분 태그입니다.
 
-#### 📐 `<polygon>` 다각형 태그
+#### 📐 `<polyline>` 다각라인 태그
 
-polygon 태그는 여러 다각형을 표현할 수 있습니다. 본 프로젝트에서는 삼각형을 표현하기 위해 사용합니다.
+polyline 태그는 여러 다각이루는 line을 표현할 수 있습니다. 본 프로젝트에서는 삼각형과 곡선을 표현하기 위해 사용합니다.
 
 - points: 각 꼭지점의 좌표를 나타냅니다.
 
@@ -108,7 +114,7 @@ polygon 태그는 여러 다각형을 표현할 수 있습니다. 본 프로젝�
 
 본 프로젝트에서는 class와 style에 상당히 많은 바인딩을 사용했습니다. 그 이유는 모든 아이콘의 색은 테마에 따라 바뀌어야 하기 때문입니다. 따라서 class와 style 바인딩에 대해 알아보겠습니다.
 
-[v-bind:class Vue 공식문서](https://kr.vuejs.org/v2/guide/class-and-style.html)
+[**v-bind:class Vue 공식문서**](https://kr.vuejs.org/v2/guide/class-and-style.html)
 
 클래스를 동적으로 바인딩하기 위해서  `v-bind:class`를 통해 전달할 수 있습니다.
 
@@ -178,7 +184,7 @@ computed: {
 
 본 프로젝트에서는 위 v-bind:class를 활용하여(:class와 같음) 삼항연산자를 활용하였습니다.
 
-**스타일바인딩**
+[**v-bind:style Vue 공식문서**](https://kr.vuejs.org/v2/guide/class-and-style.html)
 
 일반적으로 :class와 사용법은 거의 동일합니다. style을 바인딩하기 위해서는 `v-bind:style` 또는 `:style`을 사용합니다. 본 프로젝트에서는 theme의 변화를 감지하기 위해서 대부분 사용했습니다. 예시는 다음과 같습니다.
 
@@ -246,11 +252,11 @@ MDN 예제를 보고 만들었으며, a 태그를 생성한 이후 해당 링크
 
 위 keyframes은 css 애니메이션을 사용하기 위해서 사용했습니다. 본 프로젝트에서는 `hamburger` 추가기능을 클릭했을 때 좀 더 스므스하게 아이콘이 등장하여 사용자 경험을 향상시키기 위해서 사용했습니다
 
-도움말의 경우 transition을 사용하여 이를 스므스하게 페이지가 펼쳐지도록 했습니다.
+도움말의 경우 transition을 사용하여 페이지가 스므스하게 펼쳐지도록 했습니다.
 
 #### 🤔 createObjectURL & revokeObjectURL
 
-`URL.createObjectURL()` 정적 메서드는 주어진 객체를 가리키는 URL을 [DOMString](https://developer.mozilla.org/ko/docs/Web/API/DOMString)으로 반환합니다. 해당 URL은 자신을 생성한 창의 [document](https://developer.mozilla.org/ko/docs/Web/API/Document)가 사라지면 함께 무효화됩니다.
+`URL.createObjectURL()` 정적 메서드는 주어진 객체를 가리키는 URL을 [DOMString](https://developer.mozilla.org/ko/docs/Web/API/DOMString)으로 반환합니다. 해당 URL은 자신을 생성한 창의 [document](https://developer.mozilla.org/ko/docs/Web/API/Document)가 사라지면 함께 무효화됩니다. 여기서 중요한 것은 무효화 되는 것과 객체가 사라지는 것은 다릅니다. 객체는 그대로 남아 있습니다.
 
 이때 중요한 것은 URL.createObjectURL()는 항상 새로운 객체를 생성하기 때문에 해당 객체를 사용하고 난 뒤에 URL.revokeObjectURL를 사용하여 URL.createObjectURL을 해제해야 합니다.
 
@@ -264,11 +270,13 @@ MDN 예제를 보고 만들었으며, a 태그를 생성한 이후 해당 링크
 
 마우스의 좌표값을 계속 추적하면서 처음으로 클릭한 버튼 좌표를 기점으로 해당 선과 도형이 그려지도록 했습니다.
 
+모든 선과 도형은 start와 draw 함수로 구현됩니다. 이때 tool로 구분하여 무엇을 그릴지 toogle하게 됩니다. 또한 모든 도형과 선은 좌표를 기준으로 그림을 그립니다.  그리고 이러한 좌표들은 art라는 배열에 담기게 되며 redo와 undo는 art 배열을 통제하여 구현하게 됩니다.
 
+특히 `redo`의 경우 `preArt 배열을 새로 만들어 구현`하였습니다.
 
 ## ⧲ 에러 확인 및 수정
 
-1. DS_Store파일이 자동으로 생성되는 것을 확인했습니다. DS_Store 파일을 .gitignore에서 통제하는 방법은 다음과 같습니다.
+1. DS_Store파일이 자동으로 생성되는 것을 확인했습니다. DS_Store 파일을 .gitignore에서 control하는 방법은 다음과 같습니다.
    - 터미널에서 DS_Store가 있는 git폴더로 이동합니다.
    - `$ find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch -f`를 zsh 또는 bash 창에 입력합니다.
    - `$ echo .DS_Store >> .gitignore`를 입력합니다.
@@ -282,7 +290,7 @@ MDN 예제를 보고 만들었으며, a 태그를 생성한 이후 해당 링크
 
    - 해당 css artboard 클래스를 만들지 않아서 생긴 문제였습니다. 해당 클래스에 transition를 추가하여 해결하였습니다.
 
-4. redo의 경우 한글로 적용할 경우 작동하지 않는 것을 확인했습니다.
+4. redo의 경우 키보드가 한글로 적용될 경우 작동하지 않는 것을 확인했습니다.
 
    - event.key가 `ㅋ`을 감지해도 똑같이 수행하도록 했습니다. → 하지만 해결되지 않았습니다.
    - `현재 이슈 확인 중 입니다.`

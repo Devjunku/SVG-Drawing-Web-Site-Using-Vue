@@ -14,8 +14,8 @@ const app = new Vue({
   
         stroke: "#000000",
         text: "Hello",
-        fill: "#FFFFFF",
-        strokeWidth: 5,
+        fill: "#000000",
+        strokeWidth: 1,
         linecap: 'butt',
   
         preArt: [],
@@ -69,8 +69,8 @@ const app = new Vue({
             this.deleteArt()
         },
 
-        // 줌 In, Out이 먹히지 않습니다.
-        // macbook의 경우 매직패드로 줌을 사용할 수 있으나
+        // 줌 In, Out이 작동하지 않습니다.
+        // MacBook의 경우 매직패드로 줌을 사용할 수 있으나, 다른 노트북의 경우 이를 확인하지 않아 불확실합니다.
         // zoomIn() {
         //     console.log("zoomIn")
         //     let myImg = document.getElementById("artboard")
