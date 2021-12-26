@@ -13,7 +13,7 @@ const app = new Vue({
         img: '',
   
         stroke: "#000000",
-        text: "Hello",
+        text: "텍스트를 입력하고 원하는 좌표에 클릭하세요!",
         fill: "#000000",
         strokeWidth: 1,
         linecap: 'butt',
