@@ -106,6 +106,107 @@ polygon 태그는 여러 다각형을 표현할 수 있습니다. 본 프로젝�
 
 ## 📝 학습한 내용
 
+본 프로젝트에서는 class와 style에 상당히 많은 바인딩을 사용했습니다. 그 이유는 모든 아이콘의 색은 테마에 따라 바뀌어야 하기 때문입니다. 따라서 class와 style 바인딩에 대해 알아보겠습니다.
+
+[v-bind:class Vue 공식문서](https://kr.vuejs.org/v2/guide/class-and-style.html)
+
+클래스를 동적으로 바인딩하기 위해서  `v-bind:class`를 통해 전달할 수 있습니다.
+
+예시
+
+```html
+<div v-bind:class="{ active: isActive }"> 
+  
+</div>
+```
+
+만약, 객체 필드가 더 있으면, 여러 클래스를 토글할 수 있습니다. 그리고  `v-bind:class`는 일반 `class`와 공존할 수 있습니다. 그래서 다음과 같이 template을 사용할 수 있습니다.
+
+```html
+<div class="static"
+     v-bind:class="{ active: isActive, 'text-danger' : hasError }"> 
+  
+</div>
+```
+
+그리고 데이터는 다음과 같다고 합시다.
+
+```javascript
+data: {
+  isActive: true,
+  hasError: false
+}
+```
+
+그렇다면, 위의 class binding은 `<div class="static active"></div>`와 같이 토글됩니다. 또한 만약에 hasError가 true로 바뀌면, `<div class="static active text-danger"></div>`가 됩니다. 이때 data를 다음과 같이 변경하여 토글시키는 것이 javascript 객체를 활용한 방법입니다.
+
+```vue
+<div class="static"
+     v-bind:class="classObject"> 
+  
+</div>
+
+<script>
+const app = new Vue({
+  el: #app,
+  data: {
+  	classObject: {
+  		active: true,
+  		'text-danger': false
+		}
+	}
+})
+</script>
+```
+
+물론 computed를 사용하여 다음과 같이 바인딩도 가능합니다.
+
+```javascript
+data: {
+  isActive: true,
+  error: null
+},
+computed: {
+  classObject: function() {
+    return {
+      active: this.isActive && ! this.error,
+      'text-danger': this.error && this.error.type === 'fatal'
+    }
+  }
+}
+```
+
+본 프로젝트에서는 위 v-bind:class를 활용하여(:class와 같음) 삼항연산자를 활용하였습니다.
+
+**스타일바인딩**
+
+일반적으로 :class와 사용법은 거의 동일합니다. style을 바인딩하기 위해서는 `v-bind:style` 또는 `:style`을 사용합니다. 본 프로젝트에서는 theme의 변화를 감지하기 위해서 대부분 사용했습니다. 예시는 다음과 같습니다.
+
+```html
+<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+
+</div>
+```
+
+이 또한 객체에 바인딩하여 사용할 수 있습니다.
+
+```vue
+<template>
+	<div v-bind:style="styleObject">
+  </div>
+</template>
+<script>
+ export default({
+   data: {
+    activeColor: 'red',
+    fontSize: 30
+  }
+ })
+</script>
+```
+
+물론 본 프로젝트에서는 이와 관련하여 3항 연산자를 활용했습니다.
+
 #### 🤔 JSON.stringify
 
 JSON.stringify는 javascript object를 json 형태로 변환합니다. 즉, 클라이언트와 서버간 통신 데이터의 유형의 json파일을 빠르게 만들 수 있습니다. JSON.stringify는 다음과 같은 내용을 담고 있습니다.
