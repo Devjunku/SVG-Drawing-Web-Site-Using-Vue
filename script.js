@@ -24,12 +24,12 @@ const app = new Vue({
     },
     methods: {
         onFileChange(event) {
-            const file = event.target.files[0];
-            this.img = URL.createObjectURL(file);
+            const file = event.target.files[0]
+            this.img = URL.createObjectURL(file)
         },
 
         selectTool(tool, event){
-            this.tool = tool;
+            this.tool = tool
         },
   
 
@@ -162,10 +162,10 @@ const app = new Vue({
     
         drawCircle(event) {
             if(event.buttons == 1 || event.buttons == 3){
-                let lastCircle = this.art[this.art.length - 1];
-                let a = Math.abs(lastCircle.x - event.clientX);
-                let b = Math.abs(lastCircle.y - event.clientY);
-                lastCircle.radius = Math.sqrt((a * a) + (b * b));
+                let lastCircle = this.art[this.art.length - 1]
+                let a = Math.abs(lastCircle.x - event.clientX)
+                let b = Math.abs(lastCircle.y - event.clientY)
+                lastCircle.radius = Math.sqrt((a * a) + (b * b))
             }
         },
   
@@ -180,7 +180,7 @@ const app = new Vue({
         },
   
         drawImg(event) {
-            if (event.buttons == 1 && event.buttons == 3) {
+            if (event.buttons == 1 || event.buttons == 3) {
                 let lastImg = this.art[this.art.length - 1]
                 if (event.clientX - lastImg.x > 0 && event.clientY - lastImg.y > 0) {
                     lastImg.width = event.clientX - lastImg.x
@@ -199,8 +199,8 @@ const app = new Vue({
         // 지우개가 작동하도록 했습니다.
         drawEraser(event) {
             if (event.buttons == 1 || event.buttons == 3) {
-                let lastLine = this.art[this.art.length - 1];
-                lastLine.points += `${event.clientX},${event.clientY} `;
+                let lastLine = this.art[this.art.length - 1]
+                lastLine.points += `${event.clientX},${event.clientY} `
                 console.log(lastLine)
             }
         },
@@ -246,7 +246,7 @@ const app = new Vue({
         },
     
         showOpen() {
-            this.openModal = !this.showOpen
+            this.openModal = !this.openModal
             if (this.openModal) {
             for (let i in localStorage) {
                 if (i.substring(0, 8) === 'drawing_') {
@@ -263,11 +263,11 @@ const app = new Vue({
         },
     
         importArt(event) {
-            var fileReader = new FileReader()
+            let fileReader = new FileReader()
             fileReader.onload = function() {
                 app.art = JSON.parse(fileReader.result)
             }
-            fileReader.readAsText(event.tartget.value[0])
+            fileReader.readAsText(event.target.files[0])
         },
     
         exportArt() {
@@ -278,7 +278,7 @@ const app = new Vue({
                     window.URL.revokeObjectURL(textFile)
                 }
                 textFile = window.URL.createObjectURL(data)
-                return makeTextFile
+                return textFile
             }
             var filePath = `host/path/${this.name}.drw`
             var a = document.createElement('A')
@@ -326,14 +326,14 @@ const app = new Vue({
                 event.key == 'd' ? last.x+= 2 : ''
                 event.key == 'w' ? last.y-= 2 : ''
                 event.key == 's' ? last.y+= 2 : ''
-                break;
+                break
 
                 case 'circle':
                 event.key == 'a' ? last.x-= 2 : ''
                 event.key == 'd' ? last.x+= 2 : ''
                 event.key == 'w' ? last.y-= 2 : ''
                 event.key == 's' ? last.y+= 2 : ''
-                break;
+                break
                 }
             }
 
@@ -365,4 +365,4 @@ const app = new Vue({
         }
     }
 })
-document.addEventListener("keydown", app.keydown);
+document.addEventListener("keydown", app.keydown)
