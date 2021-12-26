@@ -275,12 +275,56 @@ MDN 예제를 보고 만들었으며, a 태그를 생성한 이후 해당 링크
    - 이후 add, commit, push를 진행합니다.
 
 2. 다크 테마 바뀔 시, 위 `네브바가 닫히지 않았습니다.`
+
    - 아직 hamburger 토글을 버튼 이벤트에 따라 바뀌는 함수를 작성하지 않았습니다. 작성 후 해결했습니다.
+
 3. `svg태그 안 컨테이너 배경색이` 바뀌지 않는 것을 확인했습니다.
+
    - 해당 css artboard 클래스를 만들지 않아서 생긴 문제였습니다. 해당 클래스에 transition를 추가하여 해결하였습니다.
+
 4. redo의 경우 한글로 적용할 경우 작동하지 않는 것을 확인했습니다.
+
    - event.key가 `ㅋ`을 감지해도 똑같이 수행하도록 했습니다. → 하지만 해결되지 않았습니다.
-   - 현재 이슈 확인 중입니다.
+   - `현재 이슈 확인 중 입니다.`
+
+5. ZoomIn, ZoomOut methods가 감지되지 않는 것을 확인했습니다. `현재 이슈 확인 중 입니다.`
+
+   - id값으로 svg태그 내의 clientWidth로 접근하려고 하였지만, 해당 부분은 아마 img 태그에 한해서 적용할 수 있는 것으로 보입니다.
+
+   - 해당 코드입니다.
+
+     ```vue
+     <template>
+       <li @click="zoomIn" title="zoomIn" ><i class="fas fa-search-plus"></i></li>
+       <li @click="zoomOut" title="zoomOut" ><i class="fas fa-search-minus"></i></li>
+     </template>
+     <script>
+       // 줌 In, Out이 먹히지 않습니다.
+     	zoomIn() {
+     		let myImg = document.getElementById("artboard")
+     		console.log(myImg.clientWidth) 
+     		let currWidth = myImg.clientWidth
+     		if (currWidth == 2500) return false
+     		else {
+     			myImg.style.width = (currWidth + 100) + "px"
+     		}
+     	},
+     
+     	zoomOut() {
+     		let myImg = document.getElementById("artboard") // artboard를 id값으로 바꾸어 접근하려 했습니다.
+     		console.log(myImg.clientWidth)
+     		let currWidth = myImg.clientWidth
+     		if (currWidth == 100) return false
+     		else {
+     			myImg.style.width = (currWidth - 100) + "px"
+     		}
+     	},
+     </script>
+     
+     ```
+
+     - class값이었던 artboard를 id값으로 바꾸어 접근하려 했습니다.
+     - 그리고 위 메소드가 실행되는 것까지는 확인했습니다. width값이 변하는 것도 확인했으나, 실제 화면상에서 바인딩 되지 않았습니다. 관련 자료를 더 찾아보고 있습니다.
 
 
 

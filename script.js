@@ -68,6 +68,30 @@ const app = new Vue({
     
             this.deleteArt()
         },
+
+        // 줌 In, Out이 먹히지 않습니다.
+        // macbook의 경우 매직패드로 줌을 사용할 수 있으나
+        // zoomIn() {
+        //     console.log("zoomIn")
+        //     let myImg = document.getElementById("artboard")
+        //     console.log(myImg.clientWidth)
+        //     let currWidth = myImg.clientWidth
+        //     if (currWidth == 2500) return false
+        //     else {
+        //         myImg.style.width = (currWidth + 100) + "px"
+        //     }
+        // },
+
+        // zoomOut() {
+        //     console.log("zoomOut")
+        //     let myImg = document.getElementById("artboard")
+        //     console.log(myImg.clientWidth)
+        //     let currWidth = myImg.clientWidth
+        //     if (currWidth == 100) return false
+        //     else {
+        //         myImg.style.width = (currWidth - 100) + "px"
+        //     }
+        // },
   
         startCircle(event) {
             this.art.push({
@@ -171,10 +195,13 @@ const app = new Vue({
             }
         },
     
+        // 사용자 경험상 도형을 바로 삭제시키는 것 보다는 하나하나 삭제시키는 것이 더 좋을 것 같아 좌표값으로
+        // 지우개가 작동하도록 했습니다.
         drawEraser(event) {
             if (event.buttons == 1 || event.buttons == 3) {
                 let lastLine = this.art[this.art.length - 1];
                 lastLine.points += `${event.clientX},${event.clientY} `;
+                console.log(lastLine)
             }
         },
     
@@ -238,7 +265,7 @@ const app = new Vue({
         importArt(event) {
             var fileReader = new FileReader()
             fileReader.onload = function() {
-            app.art = JSON.parse(fileReader.result)
+                app.art = JSON.parse(fileReader.result)
             }
             fileReader.readAsText(event.tartget.value[0])
         },
@@ -331,7 +358,7 @@ const app = new Vue({
                     }
                 }
             }
-            if(event.key == 's' && event.ctrlKey) {
+            if(event.ctrlKey && event.key == 's') {
                 event.preventDefault()
                 this.saveArt()
             }

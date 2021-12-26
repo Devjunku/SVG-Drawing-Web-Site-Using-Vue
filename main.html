@@ -24,35 +24,33 @@
               <li>save:&nbsp;&nbsp;&nbsp; ctrl + v &nbsp;&nbsp;&nbsp; undo: ctrl + z &nbsp;&nbsp;&nbsp; redo: ctrl + shift + z</li>
           </ul>
       </div>
+      
 
+      
       <svg class="artboard pencil" 
             :style="{'background-color' : dark ? 'black' : 'white'}" 
-            @mousemove="move" @mousedown="start">
+            @mousemove="move" @mousedown="start"
+            >
 
             <template v-for="tool in art">
                 <rect v-if="tool.tool == 'rect'"
-                    :x="tool.x"
-                    :y="tool.y"
+                    :x="tool.x" :y="tool.y"
                     :width="tool.width"
                     :height="tool.height"
-                    :rx="tool.radius"
-                    :ry="tool.radius"
+                    :rx="tool.radius" :ry="tool.radius"
                     :style="{fill: tool.fill, stroke: tool.stroke, 'stroke-width': tool.strokeWidth, 
                     transform: `rotate(${tool.rotate}deg)`}"
                 />
 
                 <line v-if="tool.tool == 'line'" 
-                    :x1="tool.x1" 
-                    :y1="tool.y1" 
-                    :x2="tool.x2" 
-                    :y2="tool.y2" 
+                    :x1="tool.x1" :y1="tool.y1" 
+                    :x2="tool.x2" :y2="tool.y2" 
                     :style="{stroke: tool.stroke, 'stroke-width': tool.strokeWidth, 'stroke-linecap': tool.linecap, 
                     transform: `rotate(${tool.rotate}deg)`}" 
                 />
 
                 <circle v-if="tool.tool == 'circle'" 
-                    :cx="tool.x"
-                    :cy="tool.y"
+                    :cx="tool.x" :cy="tool.y"
                     :r="tool.radius"
                     :stroke="tool.stroke"
                     :stroke-width="tool.strokeWidth"
@@ -73,9 +71,18 @@
                     'stroke-width': tool.width}" 
                 />
 
-                <text v-if="tool.tool == 'text'" :x="tool.x" :y="tool.y" :fill="tool.stroke" :font-size="tool.size * 4" :style="{transform: `rotate(${tool.rotate}deg)`}">{{ tool.text }}</text>
+                <text v-if="tool.tool == 'text'"
+                  :x="tool.x" :y="tool.y"
+                  :fill="tool.stroke"
+                  :font-size="tool.size * 4"
+                  :style="{transform: `rotate(${tool.rotate}deg)`}"
+                >{{ tool.text }}</text>
                 
-                <image v-if="tool.tool == 'img'" :href="tool.img" :x="tool.x" :y="tool.y" :width="tool.width + 'px'"/ :style="{transform: `rotate(${tool.rotate}deg)`}">
+                <image v-if="tool.tool == 'img'"
+                  :href="tool.img"
+                  :x="tool.x" :y="tool.y"
+                  :width="tool.width + 'px'"
+                  :style="{transform: `rotate(${tool.rotate}deg)`}">
 
             </template>
         </svg>
@@ -108,6 +115,8 @@
                     </select>
                 </li>
                 <li title="Stroke Width" id="stroke-width"><input type="range" name="vol" min="5" max="50" v-model="strokeWidth"></li>
+                <!-- <li @click="zoomIn" title="zoomIn" ><i class="fas fa-search-plus"></i></li>
+                <li @click="zoomOut" title="zoomOut" ><i class="fas fa-search-minus"></i></li> -->
                 <li @click="trash" title="Trash"><i class="fas fa-trash-alt"></i></li>
             </ul>
             <ul class="itemOptions" v-if="hamburger">
@@ -123,7 +132,7 @@
                 <li @click="exportArt"><i class="fas fa-download"></i>Export</li>
                 <li @click="dark = !dark"><i class="fas" :class="{'fa-moon': !dark, 'fa-sun': dark}"></i>{{dark ? 'Light' : 'Dark'}} Theme</li>
                 <li onclick="print();"><i class="fas fa-print"></i>Print</li>
-                <li onclick="confirm('Are you really want to close?') ? window.close() : ''"><i class="fas fa-sign-out-alt"></i></i>Close</li>
+                <li onclick="confirm('정말로 닫으시겠습니까?') ? window.close() : ''"><i class="fas fa-sign-out-alt"></i></i>Close</li>
             </ul>
         </div>
     </div>
