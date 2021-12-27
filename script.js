@@ -34,7 +34,7 @@ const app = new Vue({
   
 
         deleteArt() {
-            while(this.art.length >= 40) {
+            while(this.art.length > 40) {
                 this.art.shift()
             }
         },
@@ -241,7 +241,7 @@ const app = new Vue({
         saveArt() {
             this.name = prompt('파일 이름을 입력하세요.', this.name)
             if (this.name) {
-            localStorage.setItem(`drawing_${this.name}`, JSON.stringify(app.art))
+            localStorage.setItem(`art_${this.name}`, JSON.stringify(app.art))
             }
         },
     
@@ -249,15 +249,15 @@ const app = new Vue({
             this.openModal = !this.openModal
             if (this.openModal) {
             for (let i in localStorage) {
-                if (i.substring(0, 8) === 'drawing_') {
-                this.openOption.push(i)
+                if (i.substring(0, 4) === 'art_') {
+                this.openOptions.push(i)
                 }
             }
             }
         },
     
         openArt(event) {
-            let key = event.tartget.value
+            let key = event.target.value
             this.name = key.substring(4, key.length)
             this.art = JSON.parse(localStorage.getItem(key))
         },
